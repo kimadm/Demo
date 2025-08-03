@@ -1,0 +1,42 @@
+    {% extends 'base.html' %}
+    
+    {% block title %}IT365 Shop - Главная{% endblock %}
+    
+    {% block content %}
+        <section id="promotions" class="mb-5">
+            <!-- ... ваш слайдер ... -->
+        </section>
+    
+        <section id="categories" class="mb-5 text-center">
+            <!-- ... ваши категории ... -->
+        </section>
+    
+        <section id="popular-products">
+            <h2>Популярные товары</h2>
+            <div class="row mt-4">
+                {% for product in products %}
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card product-card h-100">
+                        <!-- Ссылка на детальную страницу -->
+                        <a href="{% url 'product_detail' product.id %}">
+                            <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">
+                                <a href="{% url 'product_detail' product.id %}" class="text-decoration-none text-dark">{{ product.name }}</a>
+                            </h5>
+                            <p class="card-text text-muted">{{ product.description|truncatewords:10 }}</p>
+                            <div class="mt-auto">
+                                <p class="h5 text-primary">{{ product.price }} ₸</p>
+                                <button class="btn btn-primary w-100"><i class="bi bi-cart-plus"></i> В корзину</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col"><p>Товаров пока нет.</p></div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endblock %}
+    

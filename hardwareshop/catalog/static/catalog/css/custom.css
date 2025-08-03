@@ -1,0 +1,65 @@
+/* Custom CSS for IT365 Shop */
+
+:root {
+    --primary-color: #0d6efd; /* Синий Bootstrap */
+    --secondary-color: #6c757d; /* Серый Bootstrap */
+    --gradient-start: #0d6efd;
+    --gradient-end: #0a58ca;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.cart-counter {
+    background-color: var(--primary-color);
+}
+
+/* Стили для карточки товара */
+.product-card {
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    border: 1px solid #e9ecef;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-card .card-title {
+     font-size: 1.1rem;
+}
+
+/* Стили для кнопок */
+.btn-primary {
+    background-image: linear-gradient(to right, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
+}
+
+/* Стили для фильтров */
+.list-group-item.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.list-group-item-action:hover, .list-group-item-action:focus {
+    background-color: #f8f9fa;
+    color: #000;
+}

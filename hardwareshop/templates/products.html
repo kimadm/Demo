@@ -1,0 +1,71 @@
+<!-- index.html (Главная) -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Главная</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/i18next@23.11.5/i18next.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-2"><a href="index.html" class="logo">TechStore</a></div>
+                <div class="col-4"><input type="text" id="search" placeholder="Поиск по каталогу" class="form-control search-bar"></div>
+                <div class="col-6 text-end">
+                    <span>+7 (727) 356-8000</span> | <a href="#">О компании</a> | <a href="feedback.html">Контакты</a> | <a href="cart.html">Корзина (0)</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav class="navbar navbar-expand-lg bg-gray">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#">Ноутбуки, планшеты</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Компьютеры</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Комплектующие</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Периферия</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Мультимедиа</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Сетевое оборудование</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Носители информации</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Программное обеспечение</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Оргтехника</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Аксессуары</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Серверы</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Видеонаблюдение</a></li>
+            </ul>
+            <select id="lang-switch" class="ms-auto form-select w-auto">
+                <option value="ru">RU</option>
+                <option value="kk">KZ</option>
+                <option value="en">EN</option>
+            </select>
+        </div>
+    </nav>
+    <section class="banner container mt-4">
+        <div class="alert alert-info">Старая версия сайта доступна по ссылке: old.techstore.kz</div>
+        <img src="https://via.placeholder.com/1200x300?text=Баннер+Монитора" alt="Баннер" class="img-fluid">
+    </section>
+    <section class="products container mt-4">
+        <h2>Хиты продаж</h2>
+        <div class="row product-grid">
+            <div class="col-md-3"><div class="card product-card"><img src="https://via.placeholder.com/200" class="card-img-top"><div class="card-body"><h5>Баребон ASUS Mini PC</h5><p class="product-price">50 000 ₸</p><button class="btn btn-danger add-to-cart" data-id="1">Купить</button></div></div></div>
+            <!-- Другие товары -->
+        </div>
+    </section>
+    <section class="products container mt-4">
+        <h2>Распродажа</h2>
+        <div class="row product-grid">
+            <div class="col-md-3"><div class="card product-card"><img src="https://via.placeholder.com/200" class="card-img-top"><div class="card-body"><h5>Процессор Intel Core</h5><p class="product-price">169 060 ₸</p><button class="btn btn-danger add-to-cart" data-id="2">Купить</button></div></div></div>
+            <!-- Другие -->
+        </div>
+    </section>
+    <footer class="footer mt-4 bg-light text-center py-3">
+        <p>TechStore © 2025 | Контакты: info@techstore.kz</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
