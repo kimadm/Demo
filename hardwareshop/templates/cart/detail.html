@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Корзина - IT365 Shop{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Ваша корзина</h1>
+
+    {% if cart %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Количество</th>
+                    <th>Цена за единицу</th>
+                    <th>Общая цена</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }} ₸</td>
+                    <td>{{ item.total_price }} ₸</td>
+                    <td>
+                        <a href="{% url 'cart:cart_remove' item.product.id %}" class="btn btn-danger btn-sm">
+                            Удалить
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr class="table-primary">
+                    <td colspan="3"><strong>Итого:</strong></td>
+                    <td colspan="2"><strong>{{ cart.get_total_price }} ₸</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        Ваша корзина пуста
+    </div>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'components' %}" class="btn btn-secondary">
+            Продолжить покупки
+        </a>
+        {% if cart %}
+        <a href="#" class="btn btn-primary ms-2">
+            Оформить заказ
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

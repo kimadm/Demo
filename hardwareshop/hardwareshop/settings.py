@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -96,12 +98,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
-# Этот блок больше не нужен, так как мы используем статику внутри приложения.
-# Оставляем его пустым для чистоты.
 STATICFILES_DIRS = []
-
-# Эта настройка нужна для команды collectstatic
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
@@ -109,3 +106,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Настройки корзины и Яндекс.Карт
+CART_SESSION_ID = 'cart'
+YANDEX_MAPS_API_KEY = '45b42b0a-19ac-4385-83a7-e5f6303cd298'

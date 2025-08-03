@@ -1,31 +1,35 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Product, Category
+from django.conf import settings
+from .models import Product, Category, ShopContact
 
-# --- Ваши существующие, рабочие функции ---
 def index(request):
     products = Product.objects.all()[:4]
-    context = {'products': products}
-    return render(request, 'index.html', context)
+    return render(request, 'index.html', {'products': products})
 
 def components_page(request, category_id=None):
     categories = Category.objects.all()
-    if category_id:
-        category = get_object_or_404(Category, id=category_id)
-        products = Product.objects.filter(category=category)
-        current_category = category
-    else:
-        products = Product.objects.all()
-        current_category = None
-    context = {
+    products = Product.objects.filter(category_id=category_id) if category_id else Product.objects.all()
+    current_category = get_object_or_404(Category, id=category_id) if category_id else None
+    return render(request, 'komplektuyushchiye.html', {
         'products': products,
         'categories': categories,
-        'current_category': current_category,
-    }
-    return render(request, 'komplektuyushchiye.html', context)
+        'current_category': current_category
+    })
 
-# --- Убедитесь, что эта функция выглядит именно так ---
 def product_detail(request, product_id):
-    # Эта функция находит товар по ID и передает его в HTML-шаблон
     product = get_object_or_404(Product, id=product_id)
-    context = {'product': product}
-    return render(request, 'product_detail.html', context)
+    return render(request, 'product_detail.html', {'product': product})
+
+def contact_page(request):
+    contact = ShopContact.objects.first()
+    if not contact:
+        contact = ShopContact.objects.create(
+            address="г. Алматы, проспект Назарбаева, 223",
+            phone="+7 (775) 996-00-64",
+            email="shop@it365.com",
+            working_hours="Пн-Пт с 10:00 до 19:00"
+        )
+    return render(request, 'contacts.html', {
+        'contact': contact,
+        'yandex_maps_api_key': settings.YANDEX_MAPS_API_KEY
+    })
