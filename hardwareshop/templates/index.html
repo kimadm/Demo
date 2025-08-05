@@ -1,14 +1,29 @@
 {% extends 'base.html' %}
-    
+
 {% block title %}IT365 Shop - Главная{% endblock %}
 
 {% block content %}
     <section id="promotions" class="mb-5">
-        <!-- ... ваш слайдер ... -->
+        <div id="promoSlider" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/1200x400/3498db/ffffff?text=Скидки+на+видеокарты+NVIDIA!" class="d-block w-100" alt="Акция 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://via.placeholder.com/1200x400/e74c3c/ffffff?text=Новые+процессоры+AMD+уже+в+продаже!" class="d-block w-100" alt="Акция 2">
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="categories" class="mb-5 text-center">
-        <!-- ... ваши категории ... -->
+        <h2>Основные категории</h2>
+        <div class="row mt-4">
+             <div class="col-md-3 col-6 mb-3"><a href="{% url 'components' %}" class="btn btn-outline-primary w-100 p-3">Процессоры</a></div>
+             <div class="col-md-3 col-6 mb-3"><a href="{% url 'components' %}" class="btn btn-outline-primary w-100 p-3">Видеокарты</a></div>
+             <div class="col-md-3 col-6 mb-3"><a href="{% url 'components' %}" class="btn btn-outline-primary w-100 p-3">Оперативная память</a></div>
+             <div class="col-md-3 col-6 mb-3"><a href="{% url 'components' %}" class="btn btn-outline-primary w-100 p-3">Все комплектующие</a></div>
+        </div>
     </section>
 
     <section id="popular-products">
@@ -27,8 +42,17 @@
                         <p class="card-text text-muted">{{ product.description|truncatewords:10 }}</p>
                         <div class="mt-auto">
                             <p class="h5 text-primary">{{ product.price }} ₸</p>
-                            <!-- ИСПРАВЛЕННАЯ КНОПКА -->
-                            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                            <button class="btn btn-outline-secondary w-100 mb-2" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#quickViewModal" 
+                                    data-product-id="{{ product.id }}"
+                                    data-product-name="{{ product.name }}"
+                                    data-product-desc="{{ product.description }}"
+                                    data-product-price="{{ product.price }}"
+                                    data-product-image="{{ product.image_url }}">
+                                <i class="bi bi-eye"></i> Быстрый просмотр
+                            </button>
+                            <form action="{% url 'cart:cart_add' product.id %}" method="post" class="cart-form">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary w-100">
                                     <i class="bi bi-cart-plus"></i> В корзину

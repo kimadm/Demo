@@ -7,10 +7,10 @@
     <title>{% block title %}IT365 Shop{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Правильный путь к чёртовым стилям -->
     <link rel="stylesheet" href="{% static 'catalog/css/custom.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
@@ -23,7 +23,6 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Главная</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'components' %}">Комплектующие</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Периферия</a></li>
-                    <!-- ИЗМЕНЕННАЯ ССЫЛКА -->
                     <li class="nav-item"><a class="nav-link" href="{% url 'contacts' %}">Контакты</a></li>
                 </ul>
                 <a class="nav-link text-white" href="{% url 'cart:cart_detail' %}">
@@ -34,10 +33,40 @@
         </div>
     </nav>
 
-    <main class="container my-5">
+    <main class="container my-5 flex-grow-1">
         {% block content %}
         {% endblock %}
     </main>
+
+    <!-- Окно для быстрого просмотра -->
+    <div class="modal fade" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quickViewModalLabel">Быстрый просмотр</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="" class="img-fluid rounded modal-product-image" alt="Товар">
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="modal-product-name"></h3>
+                            <p class="modal-product-desc"></p>
+                            <p class="h4 text-primary modal-product-price"></p>
+                            <form action="" method="post" class="modal-cart-form cart-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="bi bi-cart-plus"></i> В корзину
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="bg-dark text-white text-center p-4 mt-auto">
         <div class="container">
@@ -47,5 +76,40 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript для модального окна -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const quickViewModal = document.getElementById('quickViewModal');
+            if (quickViewModal) {
+                quickViewModal.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget;
+                    const modal = this;
+                    modal.querySelector('.modal-product-name').textContent = button.dataset.productName;
+                    modal.querySelector('.modal-product-desc').textContent = button.dataset.productDesc;
+                    modal.querySelector('.modal-product-price').textContent = button.dataset.productPrice + ' ₸';
+                    modal.querySelector('.modal-product-image').src = button.dataset.productImage;
+                    const productId = button.dataset.productId;
+                    const formAction = `/cart/add/${productId}/`;
+                    modal.querySelector('.modal-cart-form').action = formAction;
+                });
+            }
+
+            document.body.addEventListener('submit', function(e) {
+                if (e.target && e.target.classList.contains('cart-form')) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const button = form.querySelector('button[type="submit"]');
+                    const originalContent = button.innerHTML;
+                    button.classList.add('btn-success');
+                    button.innerHTML = '<i class="bi bi-check"></i> Добавлено!';
+                    setTimeout(() => {
+                        button.classList.remove('btn-success');
+                        button.innerHTML = originalContent;
+                        form.submit();
+                    }, 1000);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

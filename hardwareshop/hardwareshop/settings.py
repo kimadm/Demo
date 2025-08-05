@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
     'cart',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -110,3 +111,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Настройки корзины и Яндекс.Карт
 CART_SESSION_ID = 'cart'
 YANDEX_MAPS_API_KEY = '45b42b0a-19ac-4385-83a7-e5f6303cd298'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'shop@it365.com'
+EMAIL_HOST_PASSWORD = 'ваш_пароль'
+DEFAULT_FROM_EMAIL = 'IT365 Shop <shop@it365.com>'

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from django.conf import settings
 from .models import Product, Category, ShopContact
+from cart.forms import CartAddProductForm # Импортируем форму
 
 def index(request):
     products = Product.objects.all()[:4]
@@ -18,7 +18,12 @@ def components_page(request, category_id=None):
 
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    return render(request, 'product_detail.html', {'product': product})
+    # Создаем и передаем форму для добавления в корзину
+    cart_product_form = CartAddProductForm()
+    return render(request, 'product_detail.html', {
+        'product': product,
+        'cart_product_form': cart_product_form
+    })
 
 def contact_page(request):
     contact = ShopContact.objects.first()
@@ -29,7 +34,4 @@ def contact_page(request):
             email="shop@it365.com",
             working_hours="Пн-Пт с 10:00 до 19:00"
         )
-    return render(request, 'contacts.html', {
-        'contact': contact,
-        'yandex_maps_api_key': settings.YANDEX_MAPS_API_KEY
-    })
+    return render(request, 'contacts.html', {'contact': contact})

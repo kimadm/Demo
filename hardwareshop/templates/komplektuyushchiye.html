@@ -1,12 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    {% if current_category %}
-        {{ current_category.name }} - IT365 Shop
-    {% else %}
-        Комплектующие - IT365 Shop
-    {% endif %}
-{% endblock %}
+{% block title %}Комплектующие - IT365 Shop{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -40,17 +34,12 @@
 
     <section class="col-lg-9">
         <h2 class="mb-4">
-            {% if current_category %}
-                {{ current_category.name }}
-            {% else %}
-                Все комплектующие
-            {% endif %}
+            {% if current_category %}{{ current_category.name }}{% else %}Все комплектующие{% endif %}
         </h2>
         <div class="row">
             {% for product in products %}
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card product-card h-100">
-                    <!-- Ссылка на детальную страницу -->
                     <a href="{% url 'product_detail' product.id %}">
                         <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
                     </a>
@@ -61,8 +50,17 @@
                         <p class="card-text text-muted">{{ product.description|truncatewords:10 }}</p>
                         <div class="mt-auto">
                             <p class="h5 text-primary">{{ product.price }} ₸</p>
-                            <!-- ИЗМЕНЕННАЯ КНОПКА -->
-                            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                            <button class="btn btn-outline-secondary w-100 mb-2" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#quickViewModal" 
+                                    data-product-id="{{ product.id }}"
+                                    data-product-name="{{ product.name }}"
+                                    data-product-desc="{{ product.description }}"
+                                    data-product-price="{{ product.price }}"
+                                    data-product-image="{{ product.image_url }}">
+                                <i class="bi bi-eye"></i> Быстрый просмотр
+                            </button>
+                            <form action="{% url 'cart:cart_add' product.id %}" method="post" class="cart-form">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary w-100">
                                     <i class="bi bi-cart-plus"></i> В корзину
